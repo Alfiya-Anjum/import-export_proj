@@ -1,0 +1,6 @@
+{
+  "name": "Zorima Global Traders",
+  "description": "Premium B2B export website for Indian agricultural and food products including rice, pulses, spices, fresh fruits, vegetables, and meat.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
