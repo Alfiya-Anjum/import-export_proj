@@ -34,8 +34,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   {/* Light overlay - keeps the ship video visible */}
   <div className="absolute inset-0 bg-black/25" />
 
-  {/* Darker gradient on the left for text readability */}
-  <div className="absolute inset-0 bg-gradient-to-r from-[#071A2B]/80 via-[#071A2B]/35 to-transparent" />
+ 
 
   {/* Subtle bottom fade */}
   <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#071A2B]/70 to-transparent" />
