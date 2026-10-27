@@ -3,10 +3,13 @@ import { ArrowRight, ArrowUpRight, MessageCircle, MapPin, Package, ShieldCheck, 
 import { COMPANY_CONFIG, getWhatsAppUrl } from '../../config/company';
 import shipVideo from '../assets/ship.mp4';
 
+import indiaLogo from '../assets/images/india-logo.png';
+
 interface HeroSectionProps {
   onExploreProducts: () => void;
   onRequestQuote: () => void;
 }
+
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
   onExploreProducts,
@@ -42,9 +45,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
 
 
+
+
       {/* Background Graphic Grid and Gradient Layers */}
       <div className="absolute inset-0 bg-radial-[at_top_right] from-[#174D35]/30 via-transparent to-transparent pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(#65B84A_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.04] pointer-events-none" />
+      
       
       {/* Cinematic Ambient Glow */}
       <div className="absolute top-1/4 -left-40 w-96 h-96 bg-[#174D35]/25 rounded-full blur-3xl pointer-events-none" />
@@ -52,9 +58,26 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+
+          
           
           {/* Left Column: Core Value Proposition */}
           <div className="lg:col-span-7 space-y-7 text-left">
+
+            
+
+{/* India Logo Badge */}
+<div className="inline-flex items-center justify-center mb-4">
+  <img
+    src={indiaLogo}
+    alt="India"
+    className="w-28 h-auto object-contain"
+  />
+</div>
+
+
+
+            
             
             {/* Origin & Badge Label */}
             <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#0b243b]/90 border border-slate-700/80 shadow-inner">
@@ -69,6 +92,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 🇮🇳 Bidar, Karnataka
               </span>
             </div>
+
+            
 
             {/* Main Headline */}
             <div className="space-y-2">

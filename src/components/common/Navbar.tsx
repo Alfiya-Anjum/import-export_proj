@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { MessageCircle, Menu, X, ArrowUpRight, Globe, ShieldCheck, FileText, ChevronRight } from 'lucide-react';
 import { COMPANY_CONFIG, getWhatsAppUrl } from '../../config/company';
 
+import zorimaLogo from '../assets/images/zorima-logo.jpeg';
+
 interface NavbarProps {
   onNavigate: (sectionId: string) => void;
   onRequestQuote: () => void;
@@ -55,16 +57,24 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, onRequestQuote }) =>
             className="flex items-center gap-3 group focus:outline-none"
             id="nav-brand-logo"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#174D35] to-[#0d2e20] border border-[#65B84A]/40 flex items-center justify-center text-white shadow-md group-hover:border-[#65B84A] transition-colors">
-              <span className="font-extrabold text-xl text-[#65B84A] tracking-wider font-heading">Z</span>
+            
+            
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br flex items-center justify-center shadow-md group-hover:border-[#65B84A] transition-colors overflow-hidden">
+              <img
+                src={zorimaLogo}
+                alt="Zorima Global Traders"
+                className="w-full h-full object-contain p-1"
+              />
             </div>
+
+
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5">
                 <span className="font-black text-lg sm:text-xl tracking-tight text-white font-heading">
                   ZORIMA
                 </span>
                 <span className="text-[10px] font-semibold uppercase tracking-widest text-[#D9A441] bg-[#D9A441]/10 px-1.5 py-0.5 rounded border border-[#D9A441]/30">
-                  EXPORT
+                  IMPORT & EXPORT
                 </span>
               </div>
               <span className="text-[11px] font-medium tracking-wide text-slate-400 -mt-0.5">
