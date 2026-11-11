@@ -3,6 +3,7 @@ import { Send, FileUp, CheckCircle, ArrowRight, MessageCircle, ShieldCheck, Refr
 import { QuoteFormData, Product } from '../../types';
 import { CATEGORIES, PRODUCTS } from '../../data/products';
 import { COMPANY_CONFIG, getWhatsAppUrl } from '../../config/company';
+import { sendQuote } from '../../api/send-quote';
 
 interface QuoteSectionProps {
   preselectedProduct?: Product | null;
@@ -35,6 +36,7 @@ export const QuoteSection: React.FC<QuoteSectionProps> = ({
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submittedData, setSubmittedData] = useState<QuoteFormData | null>(null);
   const [errorMessage, setErrorMessage] = useState('');
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   // Synchronize when a product is preselected via cards or modal
   useEffect(() => {
@@ -58,45 +60,89 @@ export const QuoteSection: React.FC<QuoteSectionProps> = ({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setFormData((prev) => ({
-        ...prev,
-        attachedFileName: e.target.files![0].name,
-      }));
-    }
-  };
+const handleFileUpload = (
+  e: React.ChangeEvent<HTMLInputElement>
+) => {
+  const file = e.target.files?.[0];
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setErrorMessage('');
+  if (file) {
+    setSelectedFile(file);
 
-    // Basic Validation
-    if (
-      !formData.fullName.trim() ||
-      !formData.companyName.trim() ||
-      !formData.businessEmail.trim() ||
-      !formData.phoneWhatsapp.trim() ||
-      !formData.country.trim() ||
-      !formData.requiredQuantity.trim()
-    ) {
-      setErrorMessage('Please fill in all mandatory fields marked with an asterisk (*).');
-      return;
-    }
+    setFormData((prev) => ({
+      ...prev,
+      attachedFileName: file.name,
+    }));
+  }
+};
 
-    setIsSubmitting(true);
+  
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setErrorMessage('');
 
-    // Simulate reliable enquiry dispatch
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-      setSubmittedData({ ...formData });
-    }, 600);
-  };
+  // Validate mandatory fields
+  if (
+    !formData.fullName.trim() ||
+    !formData.companyName.trim() ||
+    !formData.businessEmail.trim() ||
+    !formData.phoneWhatsapp.trim() ||
+    !formData.country.trim() ||
+    !formData.requiredQuantity.trim()
+  ) {
+    setErrorMessage(
+      'Please fill in all mandatory fields marked with an asterisk (*).'
+    );
+    return;
+  }
+
+  setIsSubmitting(true);
+
+  try {
+    // Send the actual enquiry to your Express backend
+    const result = await sendQuote({
+      fullName: formData.fullName,
+      companyName: formData.companyName,
+      businessEmail: formData.businessEmail,
+      phoneWhatsapp: formData.phoneWhatsapp,
+      country: formData.country,
+      productCategory: formData.productCategory,
+      productName: formData.productName,
+      requiredQuantity: formData.requiredQuantity,
+      quantityUnit: formData.quantityUnit,
+      packagingPreference: formData.packagingPreference,
+      destinationPort: formData.destinationPort,
+      incoterms: formData.incoterms,
+      requiredDeliveryDate: formData.requiredDeliveryDate,
+      message: formData.message,
+      attachment: selectedFile,
+      
+    });
+
+    console.log('Enquiry successfully sent:', result);
+
+    // Show success screen only after the backend confirms success
+    setSubmittedData({ ...formData });
+    setIsSubmitted(true);
+
+  } catch (error) {
+    console.error('Enquiry submission failed:', error);
+
+    setErrorMessage(
+      error instanceof Error
+        ? error.message
+        : 'Unable to send your enquiry. Please try again.'
+    );
+
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
   const handleReset = () => {
     setIsSubmitted(false);
     setSubmittedData(null);
+    setSelectedFile(null);
     setFormData({
       fullName: '',
       companyName: '',
@@ -113,6 +159,7 @@ export const QuoteSection: React.FC<QuoteSectionProps> = ({
       requiredDeliveryDate: '',
       message: '',
       attachedFileName: '',
+      
     });
     if (onClearPreselectedProduct) {
       onClearPreselectedProduct();
