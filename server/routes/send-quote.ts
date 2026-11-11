@@ -18,7 +18,7 @@ if (!apiKey) {
 
 const resend = new Resend(apiKey);
 
-const OWNER_EMAIL = process.env.OWNER_EMAIL || 'alfiya.anjum456@gmail.com';
+const OWNER_EMAIL = process.env.OWNER_EMAIL || 'bmtbdr@gmail.com';
 
 interface AttachmentInput {
   filename: string;
