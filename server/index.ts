@@ -15,6 +15,7 @@ app.use(
     origin: [
       'http://localhost:3000',
       'http://localhost:5173',
+      'https://import-export-proj.vercel.app',
     ],
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
